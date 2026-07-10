@@ -1,46 +1,30 @@
-Name:		texlive-datetime2-en-fulltext
-Version:	36705
-Release:	2
+%global tl_name datetime2-en-fulltext
+%global tl_revision 36705
+
+Name:		texlive-%{tl_name}
+Epoch:		1
+Version:	1.0
+Release:	%{tl_revision}.1
 Summary:	English Full Text styles for the datetime2 package
 Group:		Publishing
-URL:		https://www.ctan.org/tex-archive/macros/latex/contrib/datetime2-en-fulltext
+URL:		https://www.ctan.org/tex-archive/macros/latex/contrib/datetime2-contrib/datetime2-en-fulltext
 License:	lppl1.3
-Source0:	http://mirrors.ctan.org/systems/texlive/tlnet/archive/datetime2-en-fulltext.r%{version}.tar.xz
-Source1:	http://mirrors.ctan.org/systems/texlive/tlnet/archive/datetime2-en-fulltext.doc.r%{version}.tar.xz
-Source2:	http://mirrors.ctan.org/systems/texlive/tlnet/archive/datetime2-en-fulltext.source.r%{version}.tar.xz
+Source0:	https://mirrors.ctan.org/systems/texlive/tlnet/archive/datetime2-en-fulltext.r%{tl_revision}.tar.xz
+Source1:	https://mirrors.ctan.org/systems/texlive/tlnet/archive/datetime2-en-fulltext.doc.r%{tl_revision}.tar.xz
+Source2:	https://mirrors.ctan.org/systems/texlive/tlnet/archive/datetime2-en-fulltext.source.r%{tl_revision}.tar.xz
 BuildArch:	noarch
+BuildSystem:	texlive
 BuildRequires:	texlive-tlpkg
-Requires(pre):	texlive-tlpkg
-Requires(post):	texlive-kpathsea
+%texlive_base_requires
+Provides:	texlive(%{tl_name}) = %{tl_revision}
 
 %description
 English date and time styles that use words for the numbers and
-ordinals. This package provides the following date and time
-styles: "en-fulltext", "en-FullText", "en-FULLTEXT", and the
-additional time style "en-Fulltext". (The date equivalent can
-be obtained through commands like \Today.) Unlike the base
-styles provided by datetime2.sty, these styles aren't
-expandable styles. This means that you can't use the date or
-time in PDF bookmarks or in the argument of certain commands,
-such as \MakeUppercase, while these styles are in use.
+ordinals. This package provides the following date and time styles: "en-
+fulltext", "en-FullText", "en-FULLTEXT", and the additional time style
+"en-Fulltext". (The date equivalent can be obtained through commands
+like \Today.) Unlike the base styles provided by datetime2.sty, these
+styles aren't expandable styles. This means that you can't use the date
+or time in PDF bookmarks or in the argument of certain commands, such as
+\MakeUppercase, while these styles are in use.
 
-%prep
-%setup -c -a1 -a2
-%autopatch -p1
-
-%build
-
-%install
-rm -rf tlpkg
-mkdir -p %{buildroot}%{_texmfdistdir}
-cp -a * %{buildroot}%{_texmfdistdir}
-
-%files
-%doc %{_texmfdistdir}/source/latex/datetime2-en-fulltext
-%{_texmfdistdir}/tex/latex/datetime2-en-fulltext
-%doc %{_texmfdistdir}/doc/latex/datetime2-en-fulltext
-
-%post -p %{_sbindir}/texlive.post
-
-%postun
-[ "$1" -eq 0 ] && %{_sbindir}/texlive.post
